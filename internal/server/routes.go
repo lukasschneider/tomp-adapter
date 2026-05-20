@@ -45,11 +45,11 @@ func (s *Server) RegisterRoutes() http.Handler {
 	})
 
 	r.Route("/legs", func(r chi.Router) {
-		r.Get("/legs/{id}/available-assets", s.HelloWorldHandler)
+		r.Get("/{id}/available-assets", s.HelloWorldHandler)
 		r.Get("/{id}", s.HelloWorldHandler)
 		r.Put("/{id}", s.HelloWorldHandler)
-		r.Post("/{id}/ancillaries/{category/{number}", s.HelloWorldHandler)
-		r.Delete("/{id}/ancillaries/{category/{number}", s.HelloWorldHandler)
+		r.Post("/{id}/ancillaries/{category}/{number}", s.HelloWorldHandler)
+		r.Delete("/{id}/ancillaries/{category}/{number}", s.HelloWorldHandler)
 		r.Post("/{id}/events", s.HelloWorldHandler)
 		r.Get("/{id}/progress", s.HelloWorldHandler)
 		r.Post("/{id}/progress", s.HelloWorldHandler)
@@ -72,8 +72,6 @@ func (s *Server) RegisterRoutes() http.Handler {
 		r.Get("/{id}", s.HelloWorldHandler)
 		r.Delete("/{id}", s.HelloWorldHandler)
 	})
-
-	r.Get("/", s.HelloWorldHandler)
 
 	return r
 }
