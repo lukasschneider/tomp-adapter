@@ -9,7 +9,7 @@ import (
 	"syscall"
 	"time"
 
-	"tomp-adapter/internal/server"
+	"github.com/lukasschneider/tomp-adapter/internal/server"
 )
 
 func gracefulShutdown(apiServer *http.Server, done chan bool) {
