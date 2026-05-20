@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"strings"
 
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
@@ -14,7 +15,7 @@ func (s *Server) RegisterRoutes() http.Handler {
 	r.Use(middleware.Logger)
 
 	r.Route("/operator", func(r chi.Router) {
-		r.Get("/ping", s.HelloWorldHandler)
+		r.Get("/ping", s.OperatorPingHandler)
 		r.Get("/meta", s.HelloWorldHandler)
 		r.Get("/stations", s.HelloWorldHandler)
 		r.Get("/available-assets", s.HelloWorldHandler)
@@ -48,8 +49,8 @@ func (s *Server) RegisterRoutes() http.Handler {
 		r.Get("/{id}/available-assets", s.HelloWorldHandler)
 		r.Get("/{id}", s.HelloWorldHandler)
 		r.Put("/{id}", s.HelloWorldHandler)
-		r.Post("/{id}/ancillaries/{category}/{number}", s.HelloWorldHandler)
-		r.Delete("/{id}/ancillaries/{category}/{number}", s.HelloWorldHandler)
+		r.Post("/{id}/ancillaries/{category/{number}", s.HelloWorldHandler)
+		r.Delete("/{id}/ancillaries/{category/{number}", s.HelloWorldHandler)
 		r.Post("/{id}/events", s.HelloWorldHandler)
 		r.Get("/{id}/progress", s.HelloWorldHandler)
 		r.Post("/{id}/progress", s.HelloWorldHandler)
@@ -74,6 +75,17 @@ func (s *Server) RegisterRoutes() http.Handler {
 	})
 
 	return r
+}
+
+// HTTP middleware setting a value on the request context
+func AcceptLanguageHeaderMiddleware(next http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		acceptLanguage := w.Header().Get("Accept-Language")
+		if strings.ToLower(acceptLanguage) == "" {
+
+		}
+		next.ServeHTTP(w, r)
+	})
 }
 
 func (s *Server) HelloWorldHandler(w http.ResponseWriter, r *http.Request) {
