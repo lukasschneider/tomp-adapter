@@ -23,6 +23,11 @@ clean:
 	@echo "Cleaning..."
 	@rm -f main
 
+# Build for Sam CLI
+
+build-sam:
+	GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o bootstrap cmd/lambda/main.go
+
 # Live Reload
 watch:
 	@if command -v air > /dev/null; then \
